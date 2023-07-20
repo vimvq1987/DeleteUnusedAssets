@@ -43,7 +43,11 @@ namespace vimvq1987
                 totalAsset++;
                 if (!_contentRepository.GetReferencesToContent(asset.ContentLink, false).Any())
                 {
-                    toDelete.Add(asset.ContentLink.ToReferenceWithoutVersion());
+                    //TODO: make this configurable
+                    if (asset.Created < DateTime.UtcNow.AddDays(-30))
+                    {
+                        toDelete.Add(asset.ContentLink.ToReferenceWithoutVersion());
+                    }
                 }
 
                 if (toDelete.Count % 50 == 0)
